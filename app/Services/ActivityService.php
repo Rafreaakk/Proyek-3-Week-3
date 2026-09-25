@@ -27,6 +27,19 @@ class ActivityService
         return $activity->refresh();
     }
 
+    public function getFilteredActivities(?string $status)
+    {
+        $validStatuses = ['Planned', 'Ongoing', 'Done'];
+        
+        $status = $status ? ucfirst(strtolower($status)) : null;
+
+        if ($status && in_array($status, $validStatuses)) {
+            return Activity::where('status', $status)->get();
+        }
+
+        return Activity::all();
+    }
+
     private function ensureValidTransition(
         string $current,
         string $next

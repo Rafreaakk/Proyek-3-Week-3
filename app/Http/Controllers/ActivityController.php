@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Activity;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
@@ -14,10 +15,13 @@ class ActivityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, ActivityService $service)
     {
-        $activities = Activity::all();
-        return view('activities.index', compact('activities'));
+        $status = $request->query('status');
+        
+        $activities = $service->getFilteredActivities($status);
+
+        return view('activities.index', compact('activities', 'status'));
     }
 
     /**
