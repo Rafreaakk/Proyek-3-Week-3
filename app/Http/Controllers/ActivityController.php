@@ -16,13 +16,16 @@ class ActivityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, ActivityService $service)
+    public function index(\Illuminate\Http\Request $request, \App\Services\ActivityService $service)
     {
         $status = $request->query('status');
-        
-        $activities = $service->getFilteredActivities($status);
+        $search = $request->query('search');
+        $sortBy = $request->query('sort_by', 'activity_date');
+        $order = $request->query('order', 'desc');
 
-        return view('activities.index', compact('activities', 'status'));
+        $activities = $service->getFilteredActivities($status, $search, $sortBy, $order);
+
+        return view('activities.index', compact('activities'));
     }
 
     /**
