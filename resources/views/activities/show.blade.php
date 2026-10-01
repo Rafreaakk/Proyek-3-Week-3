@@ -4,7 +4,8 @@
 @section('content')
     <h1>{{ $activity->title }}</h1> 
     <p>Tanggal: {{ $activity->activity_date->format('d M Y') }}</p>
-    <p>Kategori: {{ $activity->category }}</p>
+    <p>Kategori: {{ $activity->category->name}}</p>
+    <p>Kode Kegiatan: {{ $activity->code}}</p>
     <p>Status: {{ $activity->status }}</p>
     <p>Deskripsi: {{ $activity->description }}</p>
 

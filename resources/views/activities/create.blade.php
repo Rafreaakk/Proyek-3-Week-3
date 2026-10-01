@@ -7,6 +7,18 @@
         @csrf
 
         <div>
+            <label for="code">Kode Kegiatan</label>
+            <input 
+                id="code" 
+                name="code" 
+                value="{{ old('code', $activity->code ?? '') }}"
+            >
+            @error('code')
+                <p style="color: red">{{ $message }}</p>
+            @enderror
+        </div>
+        
+        <div>
             <label for="title">Judul</label>
             <input 
                 id="title" 
@@ -41,8 +53,21 @@
         </div>
 
         <div>
-            <label for="category">Kategori</label>
-            <input type="text" id="category" name="category" value="{{ old('category') }}">
+            <label for="category_id">Kategori</label>
+            <select name="category_id" id="category_id">
+                <option value="">-- Pilih Kategori --</option>
+                @foreach ($categories as $category)
+                    <option 
+                        value="{{ $category->id }}"
+                        @selected(old('category_id') == $category->id)
+                    >
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('category_id')
+                <p style="color: red">{{ $message }}</p>
+            @enderror
         </div>
 
         <button type="submit">Simpan</button>

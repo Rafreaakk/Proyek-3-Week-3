@@ -3,21 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Activity extends Model
 {
-    protected $fillable = [
-        'title',
-        'description',
-        'activity_date',
-        'category',
-        'status',
-    ];
+    use SoftDeletes;
 
-    protected function casts(): array
+    protected $guarded = ['id'];
+
+    protected function casts(): array 
     {
         return [
             'activity_date' => 'date',
         ];
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    
 }

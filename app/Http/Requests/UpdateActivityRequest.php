@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,6 +24,14 @@ class UpdateActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'category_id' => ['required', 'exists:categories,id'],
+
+            'code' => [
+                'required',
+                'string',
+                'max:30',
+                Rule::unique('activities', 'code')->ignore($this->route('activity'))
+            ],
             // BR-01: Judul wajib diisi, minimal 5 karakter, maksimal 100 karakter
             'title' => ['required', 'string', 'min:5', 'max:100'],
             
@@ -31,9 +40,6 @@ class UpdateActivityRequest extends FormRequest
             
             // BR-03: Status wajib diisi dan hanya boleh salah satu dari 3 nilai ini
             'status' => ['required', 'in:Planned,Ongoing,Done'],
-            
-            // Kategori opsional, tetapi jika diisi harus berupa teks
-            'category' => ['nullable', 'string'],
         ];
     }
 }

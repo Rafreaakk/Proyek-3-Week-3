@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Activity;
+use App\Models\Category;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
 use App\Services\ActivityService;
@@ -29,7 +30,11 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        return view('activities.create');
+        //Mengambil semua data kategori dari database
+        $categories = Category::all();
+
+        //Melempar data kategori tersebut ke halaman form
+        return view('activities.create', compact('categories'));
     }
 
     /**
@@ -58,7 +63,8 @@ class ActivityController extends Controller
      */
     public function edit(Activity $activity)
     {
-        return view('activities.edit', compact('activity'));
+        $categories = Category::all();
+        return view('activities.edit', compact('activity', 'categories'));
     }
 
     /**

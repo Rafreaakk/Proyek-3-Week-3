@@ -30,14 +30,13 @@ class ActivityService
     public function getFilteredActivities(?string $status)
     {
         $validStatuses = ['Planned', 'Ongoing', 'Done'];
-        
         $status = $status ? ucfirst(strtolower($status)) : null;
 
         if ($status && in_array($status, $validStatuses)) {
-            return Activity::where('status', $status)->get();
+            return Activity::where('status', $status)->paginate(10)->withQueryString();
         }
 
-        return Activity::all();
+        return Activity::paginate(10)->withQueryString();
     }
 
     private function ensureValidTransition(
