@@ -29,7 +29,7 @@ class ActivityService
 
     public function getFilteredActivities(?string $status, ?string $search = null, ?string $sortBy = 'activity_date', ?string $order = 'desc')
     {
-        $query = \App\Models\Activity::query();
+        $query = \App\Models\Activity::query()->with('category');
     
         $validStatuses = ['Planned', 'Ongoing', 'Done'];
         $status = $status ? ucfirst(strtolower($status)) : null;

@@ -8,5 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/activities/{activity}', [ActivityController::class, 'show'])
 //     ->name('activities.show');
+Route::get('/activities/trash', [App\Http\Controllers\ActivityController::class, 'trash'])->name('activities.trash');
+Route::post('/activities/{id}/restore', [App\Http\Controllers\ActivityController::class, 'restore'])->name('activities.restore');
 
 Route::resource('activities', ActivityController::class);

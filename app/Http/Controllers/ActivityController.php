@@ -100,4 +100,20 @@ class ActivityController extends Controller
         return to_route('activities.index')
             ->with('succes', 'Kegiatan berhasil dihapus.');
     }
+
+    // Menampilkan daftar data yang terhapus (Soft Deleted)
+    public function trash()
+    {
+        $activities = \App\Models\Activity::onlyTrashed()->paginate(10);
+        return view('activities.trash', compact('activities'));
+    }
+
+    // Mengembalikan data yang terhapus (Restore)
+    public function restore($id)
+    {
+        $activity = \App\Models\Activity::onlyTrashed()->findOrFail($id);
+        $activity->restore();
+        
+        return redirect()->route('activities.trash')->with('success', 'Kegiatan berhasil dipulihkan!');
+    }
 }
