@@ -3,7 +3,7 @@
 @section('content')
     <h1>Tambah Kegiatan</h1>
 
-    <form action="{{ route('activities.store') }}" method="POST">
+    <form action="{{ route('activities.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div>
@@ -69,7 +69,11 @@
                 <p style="color: red">{{ $message }}</p>
             @enderror
         </div>
-
+        <div style="margin-bottom: 10px;">
+            <label>Poster Kegiatan (Opsional):</label><br>
+            <input type="file" name="poster" accept="image/*">
+            @error('poster') <span style="color: red;">{{ $message }}</span> @enderror
+        </div>
         <button type="submit">Simpan</button>
     </form>
 @endsection

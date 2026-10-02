@@ -48,7 +48,7 @@ class ActivityController extends Controller
         ActivityService $service
         ): RedirectResponse {
             $activity = $service->create($request->validated());
-
+            
             return to_route('activities.show', $activity)
                 ->with('succes', 'Kegiatan berhasil dibuat.');
         }

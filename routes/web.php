@@ -12,3 +12,4 @@ Route::get('/activities/trash', [App\Http\Controllers\ActivityController::class,
 Route::post('/activities/{id}/restore', [App\Http\Controllers\ActivityController::class, 'restore'])->name('activities.restore');
 
 Route::resource('activities', ActivityController::class);
+Route::post('/activities/{id}/register', [App\Http\Controllers\RegistrationController::class, 'store'])->name('registrations.store');
